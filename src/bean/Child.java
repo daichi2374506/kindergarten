@@ -32,7 +32,7 @@ public class Child {
 	public void setClass_id(String class_id) {
 		this.class_id = class_id;
 	}
-	public boolean isIs_attend() {
+	public boolean is_attend() {
 		return is_attend;
 	}
 	public void setIs_attend(boolean is_attend) {
