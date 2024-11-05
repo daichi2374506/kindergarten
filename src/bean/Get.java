@@ -2,14 +2,15 @@ package bean;
 
 public class Get {
 
-	private int bus_id;
+	private String bus_id;
 	private String child_id;
 	private boolean get_is_attend;
 	private String facility_id;
-	public int getBus_id() {
+
+	public String getBus_id() {
 		return bus_id;
 	}
-	public void setBus_id(int bus_id) {
+	public void setBus_id(String bus_id) {
 		this.bus_id = bus_id;
 	}
 	public String getChild_id() {
