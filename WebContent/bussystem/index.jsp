@@ -4,7 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title></title>
+
+<script>
+location.href="/kindergarten/bussystem/Login.action";
+</script>
+
 </head>
 <body>
 
