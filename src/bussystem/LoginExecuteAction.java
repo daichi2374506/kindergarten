@@ -5,7 +5,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import bean.ManageUser;
+import dao.ManageUserDao;
 import tool.Action;
 
 public class LoginExecuteAction extends Action{
@@ -17,17 +20,18 @@ public class LoginExecuteAction extends Action{
 
 		Map<String, String> errors = new HashMap<>();
 
-
+		ManageUser MU = new ManageUser();
+		ManageUserDao MUDao = new ManageUserDao();
 
 		String id = req.getParameter("id");
 		String password = req.getParameter("password");
 
+		MU = MUDao.login(user_id, user_pass);
 
-
-		if() {
+		if(MU==null) {
 			errors.put("null", "ログインに失敗しました。IDまたはパスワードが正しくありません。");
 		} else {
-			.setAuthenticated(true);
+			MU.setAuthenticated(true);
 		}
 
 		if(!errors.isEmpty()) {
@@ -38,8 +42,9 @@ public class LoginExecuteAction extends Action{
 
 		HttpSession session = req.getSession(true);
 
+		session.setAttribute("user", MU);
 
-
+		url = "main/Menu.action";
 		res.sendRedirect(url);
 
 

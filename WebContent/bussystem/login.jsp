@@ -24,7 +24,7 @@
 
 	<div class="log">
 		<label>ID</label>
-		<input type="text" name="id" maxlength="20" placeholder="半角でご入力下さい"
+		<input type="text" name="user_id" maxlength="20" placeholder="半角でご入力下さい"
 		required
 		><br>
 	</div>
@@ -32,7 +32,7 @@
 	<div class="pas">
 
 		<label>パスワード</label>
-		<input type="password" id="password" name="password" maxlength="20" required/><br>
+		<input type="password" id="user_pass" name="user_pass" maxlength="20" required/><br>
 		<input type="checkbox" id="showPassword" onchange="togglePasswordVisibility()" />
 		<label for="showPassword">パスワードを表示</label>
 
