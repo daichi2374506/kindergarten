@@ -13,6 +13,7 @@ public class ChildDao extends Dao{
 
 	private String baseSql = "select * from Child WHERE facility_id = ? ";
 
+	//子供個人の情報取得用
 	public Child getChildinfo(String facility_id,String child_id)throws Exception{
 		Child child = new Child();
 		Connection connection = getConnection();
@@ -60,6 +61,7 @@ public class ChildDao extends Dao{
 		return child;
 	}
 
+	//名簿一覧表示用
 	public List<Child> getChildListinfo(String facility_id)throws Exception{
 		//戻り値用のリスト
 		List<Child> list = new ArrayList<>();
@@ -105,8 +107,9 @@ public class ChildDao extends Dao{
 		return list;
 	}
 
+	//子供情報のデータベース登録
 	public boolean saveChildinfo(Child child) throws Exception{
-		//コネクションを確立
+				//コネクションを確立
 				Connection connection = getConnection();
 				//プリペアードステートメント
 				PreparedStatement statement = null;
@@ -115,7 +118,7 @@ public class ChildDao extends Dao{
 
 				try{
 					//データベースから学生を取得
-					Child old = getChildinfo(child.getChild_id());
+					Child old = getChildinfo(child.getFacility_id(), child.getChild_id());
 					if (old == null) {
 						//学生が存在しなかった場合
 						//プリペアードステートメンにINSERT文をセット
@@ -132,7 +135,7 @@ public class ChildDao extends Dao{
 						//学生が存在した場合
 						//プリペアードステートメントにUPDATE文をセット
 						statement = connection
-								.prepareStatement("update child set child_name=?, parents_id=?, class_id=?, is_attend=?, facility_id=?, where child_id=?");
+								.prepareStatement("update child set child_name=?, parents_id=?, class_id=?, is_attend=?, facility_id=? where child_id=? and facility_id=?");
 						//プリペアードステートメントに値をバインド
 						statement.setString(1, child.getChild_name());
 						statement.setString(2, child.getParents_id());
@@ -140,6 +143,7 @@ public class ChildDao extends Dao{
 						statement.setBoolean(4, child.is_attend());
 						statement.setString(5, child.getFacility_id());
 						statement.setString(6, child.getChild_id());
+						statement.setString(7, child.getFacility_id());
 					}
 
 					//プリペアードステートメントを実行
