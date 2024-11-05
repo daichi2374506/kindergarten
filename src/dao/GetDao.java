@@ -123,7 +123,7 @@ public class GetDao extends Dao{
 			if (get.isGet_is_attend() == false) {
 				//プリペアードステートメンにUPDATE文をセット
 				statement = connection.prepareStatement(
-						"update get set is_attend=? where bus_id=?, child_id=?, facility_id=? ");
+						"update Get set is_attend=? where bus_id=?, child_id=?, facility_id=? ");
 				//プリペアードステートメントに値をバインド
 				statement.setBoolean(1, true);
 				statement.setString(2, get.getBus_id());
@@ -133,7 +133,7 @@ public class GetDao extends Dao{
 			} else {
 				//プリペアードステートメンにUPDATE文をセット
 				statement = connection.prepareStatement(
-						"update get set is_attend=? where bus_id=?, child_id=?, facility_id=? ");
+						"update Get set is_attend=? where bus_id=?, child_id=?, facility_id=? ");
 				//プリペアードステートメントに値をバインド
 				statement.setBoolean(1, false);
 				statement.setString(2, get.getBus_id());

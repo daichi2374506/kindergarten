@@ -69,13 +69,13 @@ public class ParentsUserDao extends Dao{
 		int count = 0;
 
 		try{
-			//データベースから学生を取得
+			//データベースから保護者を取得
 			ParentsUser old = getParentsUserInfo(pu.getParents_id(), pu.getFacility_id());
 			if (old == null) {
 				//保護者が存在しなかった場合
 				//プリペアードステートメンにINSERT文をセット
 				statement = connection.prepareStatement(
-						"insert into parentsuser (parents_id, parents_name, parents_pass, parents_address, parents_tel, parents_mail1, parents_mail2, parents_mail3, facility_id) values(?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+						"insert into ParentsUser (parents_id, parents_name, parents_pass, parents_address, parents_tel, parents_mail1, parents_mail2, parents_mail3, facility_id) values(?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 				//プリペアードステートメントに値をバインド
 				statement.setString(1, pu.getParents_id());
 				statement.setString(2, pu.getParents_name());
@@ -87,10 +87,10 @@ public class ParentsUserDao extends Dao{
 				statement.setString(8, pu.getParents_mail3());
 				statement.setString(9, pu.getFacility_id());
 			} else {
-				//学生が存在した場合
+				//保護者が存在した場合
 				//プリペアードステートメントにUPDATE文をセット
 				statement = connection
-						.prepareStatement("update parentsuser set parents_id=?, parents_name=?, parents_pass=?, parents_address=?, parents_tel=?, parents_mail1=?, parents_mail2=?, parents_mail3=?, facility_id=? where parentsuser_id=? and facility_id=?");
+						.prepareStatement("update ParentsUser set parents_id=?, parents_name=?, parents_pass=?, parents_address=?, parents_tel=?, parents_mail1=?, parents_mail2=?, parents_mail3=?, facility_id=? where parentsuser_id=? and facility_id=?");
 				//プリペアードステートメントに値をバインド
 				statement.setString(1, pu.getParents_id());
 				statement.setString(2, pu.getParents_name());
@@ -139,9 +139,57 @@ public class ParentsUserDao extends Dao{
 
 	}
 
-	public ParentsUser parentsLogin() throws Exception{
+	public ParentsUser parentsLogin(String parents_id, String parents_pass,String facility_id) throws Exception{
 
+		ParentsUser pu = new ParentsUser();
+		//データベースへのコネクション
+		Connection connection =getConnection();
 
+		//プリペアードステートメント
+		PreparedStatement statement=null;
+
+		try{
+			//prepareにsql文セット
+			statement=connection.prepareStatement("select * from parents_user where parents_id=? and parents_pass=? and facility_id=? ");
+			//バインド
+			statement.setString(1, parents_id);
+			statement.setString(2, parents_pass);
+			statement.setString(3, facility_id);
+			//プリペアードステートメント実行
+			ResultSet rSet=statement.executeQuery();
+
+			if(rSet.next()){
+				//リザルトセットが存在する場合
+				//保護者インスタンスに検索結果をセット
+				pu.setParents_id(rSet.getString("parents_id"));
+				pu.setParents_pass(rSet.getString("parents_pass"));
+				pu.setParents_name(rSet.getString("parents_name"));
+				pu.setFacility_id(rSet.getString("facility_id"));
+			}else{
+				//リザルトセットが存在しない場合
+				//保護者インスタンスにnullをセット
+				pu=null;
+			}
+		}catch(Exception e){
+			throw e;
+		}finally{
+			//プリペア閉じる
+			if(statement !=null){
+				try{
+					statement.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
+			if(connection !=null){
+				try{
+					connection.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
+		}
+		return pu;
 	}
 
 }

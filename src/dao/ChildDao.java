@@ -123,7 +123,7 @@ public class ChildDao extends Dao{
 						//学生が存在しなかった場合
 						//プリペアードステートメンにINSERT文をセット
 						statement = connection.prepareStatement(
-								"insert into student (child_id, child_name, parents_id, class_id, is_attend, facility_id) values(?, ?, ?, ?, ?, ?) ");
+								"insert into Child (child_id, child_name, parents_id, class_id, is_attend, facility_id) values(?, ?, ?, ?, ?, ?) ");
 						//プリペアードステートメントに値をバインド
 						statement.setString(1, child.getChild_id());
 						statement.setString(2, child.getChild_name());
@@ -135,7 +135,7 @@ public class ChildDao extends Dao{
 						//学生が存在した場合
 						//プリペアードステートメントにUPDATE文をセット
 						statement = connection
-								.prepareStatement("update child set child_name=?, parents_id=?, class_id=?, is_attend=?, facility_id=? where child_id=? and facility_id=?");
+								.prepareStatement("update Child set child_name=?, parents_id=?, class_id=?, is_attend=?, facility_id=? where child_id=? and facility_id=?");
 						//プリペアードステートメントに値をバインド
 						statement.setString(1, child.getChild_name());
 						statement.setString(2, child.getParents_id());
