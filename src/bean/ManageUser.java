@@ -1,6 +1,6 @@
 package bean;
 
-public class ManageUser {
+public class ManageUser extends User{
 
 	private String user_id;
 	private String user_name;
