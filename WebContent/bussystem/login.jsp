@@ -49,7 +49,14 @@
 			}
 		</script><br>
 	</div>
-		<div class="">
+
+		<label>facility_ID</label>
+		<input type="text" name="facility_id" maxlength="20"
+		required
+		><br>
+		</div>
+
+
 		<input type="submit" name="login" value="ログイン"/>
 		</div>
 </form>
