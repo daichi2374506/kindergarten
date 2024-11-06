@@ -7,6 +7,7 @@ public class Absence {
 	private String child_id;
 	private String absence_date;
 	private String facility_id;
+	private boolean abs_is_attend;
 
 	public String getAbsence_id() {
 		return absence_id;
@@ -37,6 +38,9 @@ public class Absence {
 	}
 	public void setFacility_id(String facility_id) {
 		this.facility_id = facility_id;
+	}
+	public boolean abs_is_attend() {
+		return abs_is_attend;
 	}
 
 }

@@ -29,8 +29,9 @@ public class BusDao extends Dao {
 			st = connection.prepareStatement(baseSql);
 			st.setString(1,facility_id);
 			ResultSet rSet = st.executeQuery();
-			Bus bus = new Bus();
+
 			while(rSet.next()){
+				Bus bus = new Bus();
 				bus.setBus_id(rSet.getString("bus_id"));
 				bus.setBus_name(rSet.getString("bus_name"));
 				bus.setFacility_id(rSet.getString("facility_id)"));

@@ -61,7 +61,7 @@ public class GetDao extends Dao{
 
 	}
 
-	public List<Get> getGetListinfo(String bus_id, String child_id, String facility_id)throws Exception{
+	public List<Get> getGetListinfo(String bus_id, String facility_id)throws Exception{
 		//戻り値用のリスト
 		List<Get> list = new ArrayList<>();
 		Connection connection = getConnection();
@@ -71,10 +71,11 @@ public class GetDao extends Dao{
 			st = connection.prepareStatement(baseSql);
 			st.setString(1,facility_id);
 			ResultSet rSet = st.executeQuery();
-			Get get = new Get();
+
 
 			//SQLで取得したGet情報を全てリストに詰め込む
 			while(rSet.next()){
+				Get get = new Get();
 				get.setBus_id(rSet.getString("bus_id"));
 				get.setChild_id(rSet.getString("child_id"));
 				get.setGet_is_attend(rSet.getBoolean("get_is_attend"));

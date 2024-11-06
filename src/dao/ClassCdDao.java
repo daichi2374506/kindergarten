@@ -37,10 +37,10 @@ public class ClassCdDao extends Dao{
 				// SQL文を実行する
 				// 結果はリザルトセット型となる
 				ResultSet rSet = statement.executeQuery();
-				ClassCd classcd = new ClassCd();
 
 				// リザルトセット（結果）を全件走査
 				while (rSet.next()){
+					ClassCd classcd = new ClassCd();
 					// 戻り値用のlistにクラスIDを追加
 					classcd.setClass_id(rSet.getString("class_id"));
 					classcd.setClass_name(rSet.getString("class_name"));

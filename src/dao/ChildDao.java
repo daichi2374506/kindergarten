@@ -61,7 +61,7 @@ public class ChildDao extends Dao{
 		return child;
 	}
 
-	//名簿一覧表示用
+	//子供全員表示
 	public List<Child> getChildListinfo(String facility_id)throws Exception{
 		//戻り値用のリスト
 		List<Child> list = new ArrayList<>();
@@ -72,8 +72,9 @@ public class ChildDao extends Dao{
 			st = connection.prepareStatement(baseSql);
 			st.setString(1,facility_id);
 			ResultSet rSet = st.executeQuery();
-			Child child = new Child();
+
 			while(rSet.next()){
+				Child child = new Child();
 				child.setChild_id(rSet.getString("child_id"));
 				child.setChild_name(rSet.getString("child_name"));
 				child.setParents_id(rSet.getString("parents_id"));
@@ -106,6 +107,7 @@ public class ChildDao extends Dao{
 		}
 		return list;
 	}
+
 
 	//子供情報のデータベース登録
 	public boolean saveChildinfo(Child child) throws Exception{
