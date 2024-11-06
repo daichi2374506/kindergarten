@@ -24,7 +24,9 @@
 
 	<div class="log">
 		<label>ID</label>
-		<input type="text" name="user_id" maxlength="20" placeholder="半角でご入力下さい"
+		<%-- value=T0000001 --%>
+		<%-- value=P2400001 --%>
+		<input type="text" name="user_id" maxlength="20" value="M0000001"
 		required
 		><br>
 	</div>
@@ -32,7 +34,9 @@
 	<div class="pas">
 
 		<label>パスワード</label>
-		<input type="password" id="user_pass" name="user_pass" maxlength="20" required/><br>
+		<%-- value=kanasen01 --%>
+		<%-- value=nohara111 --%>
+		<input type="password" id="user_pass" name="user_pass" maxlength="20" value="kanakan01" required/><br>
 		<input type="checkbox" id="showPassword" onchange="togglePasswordVisibility()" />
 		<label for="showPassword">パスワードを表示</label>
 
@@ -51,7 +55,8 @@
 	</div>
 
 		<label>facility_ID</label>
-		<input type="text" name="facility_id" maxlength="20"
+
+		<input type="text" name="facility_id" maxlength="20" value="KK000"
 		required
 		><br>
 		</div>
@@ -59,6 +64,7 @@
 
 		<input type="submit" name="login" value="ログイン"/>
 		</div>
+
 </form>
 
 </body>
