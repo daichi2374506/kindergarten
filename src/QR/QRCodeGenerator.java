@@ -27,7 +27,7 @@ public class QRCodeGenerator {
 
     public static void main(String[] args) {
         try {
-            generateQRCodeImage("2400001", 350, 350, QR_CODE_IMAGE_PATH);
+            generateQRCodeImage("https://plum-chloride.jp/kotonoha-tango/index.html?appsule=2", 350, 350, QR_CODE_IMAGE_PATH);
         } catch (WriterException | IOException e) {
             e.printStackTrace();
         }
