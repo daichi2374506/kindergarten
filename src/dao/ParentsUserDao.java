@@ -204,7 +204,7 @@ public class ParentsUserDao extends Dao{
 
 		try{
 			//prepareにsql文セット
-			statement=connection.prepareStatement("select * from parents_user where parents_id=? and parents_pass=? and facility_id=? ");
+			statement=connection.prepareStatement("select * from parents where parents_id=? and parents_pass=? and facility_id=? ");
 			//バインド
 			statement.setString(1, parents_id);
 			statement.setString(2, parents_pass);
