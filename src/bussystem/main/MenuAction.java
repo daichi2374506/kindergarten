@@ -15,7 +15,13 @@ public class MenuAction extends Action{
 
 		String m1 = (String)session.getAttribute("m");
 		req.setAttribute("m", m1);
+		String m2 = (String)session.getAttribute("t");
+		req.setAttribute("t", m2);
+		String m3 = (String)session.getAttribute("p");
+		req.setAttribute("p", m3);
 		System.out.println(m1);
+		System.out.println(m2);
+		System.out.println(m3);
 		req.getRequestDispatcher("menu.jsp").forward(req, res);
 
 	}

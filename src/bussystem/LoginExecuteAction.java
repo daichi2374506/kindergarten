@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bean.ManageUser;
+import bean.ParentsUser;
 import dao.ManageUserDao;
+import dao.ParentsUserDao;
 import tool.Action;
 
 public class LoginExecuteAction extends Action{
@@ -21,8 +23,10 @@ public class LoginExecuteAction extends Action{
 		Map<String, String> errors = new HashMap<>();
 
 		ManageUser MU = new ManageUser();
+		ParentsUser PU = new ParentsUser();
 
 		ManageUserDao MUDao = new ManageUserDao();
+		ParentsUserDao PUDao = new ParentsUserDao();
 
 		HttpSession session = req.getSession(true);
 
@@ -32,11 +36,16 @@ public class LoginExecuteAction extends Action{
 
 		MU = MUDao.login(user_id, user_pass, facility_id);
 
+		String parents_id = req.getParameter("parents_id");
+		String parents_pass = req.getParameter("parents_pass");
+
+		PU = PUDao.parentsLogin(parents_id, parents_pass, facility_id);
+
 
 		if(MU==null) {
 			errors.put("null", "ログインに失敗しました。IDまたはパスワードが正しくありません。");
 
-			System.out.println("AAAAA1");
+			System.out.println("ログインに失敗しました/管理者or先生");
 
 		} else if(user_id.contains("M")) {
 			MU.setAuthenticated(true);
@@ -55,17 +64,21 @@ public class LoginExecuteAction extends Action{
 			session.setAttribute("t", t);
 
 			System.out.println("先生としてログイン");
+		}
 
-		} else if(user_id.contains("P")) {
-			MU.setAuthenticated(true);
+		if(PU==null) {
+			errors.put("null", "ログインに失敗しました。IDまたはパスワードが正しくありません。");
+
+			System.out.println("ログインに失敗しました/保護者");
+
+		} else {
+			PU.setAuthenticated(true);
 
 			String p = "p";
 			session.setAttribute("p", p);
-
+			System.out.println(p);
 			System.out.println("保護者としてログイン");
-
 		}
-
 
 		if(!errors.isEmpty()) {
 			req.setAttribute("errors", errors);
