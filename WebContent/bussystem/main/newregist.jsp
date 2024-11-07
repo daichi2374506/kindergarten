@@ -18,9 +18,9 @@
 		<label>新規ユーザー区分</label>
 		<select name="user_status">
 			<option value="0">--------</option>
-			<c:forEach var="us" items="${user_status}">
+			<c:forEach var="user_status" items="${user_status}">
 				<%-- 現在のyearと選択されていたent_yearが一致していた場合selectedを追記 --%>
-				<option value="${us}">${us}</option>
+				<option value="${user_status}">${user_status}</option>
 			</c:forEach>
 		</select>
 		<div>${errors.get("user_status")}</div>

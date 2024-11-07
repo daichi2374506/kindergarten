@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import bean.ManageUser;
 
@@ -61,6 +63,79 @@ public class ManageUserDao extends Dao{
 			}
 		}
 		return mu;
+	}
+
+	private List<ManageUser> postFilter(ResultSet rSet) throws Exception {
+		//空のリスト作成
+		List<ManageUser>list=new ArrayList<>();
+		try{
+			//リザルトセットを全件走査
+
+			while(rSet.next()){
+
+				ManageUser mu=new ManageUser();
+
+				mu.setUser_id(rSet.getString("user_id"));
+				mu.setUser_name(rSet.getString("user_name"));
+				mu.setUser_pass(rSet.getString("user_pass"));
+				mu.setFacility_id(rSet.getString("facility_id"));
+
+
+				//リストにセットしていく
+				list.add(mu);
+
+			}
+		}catch(SQLException |NullPointerException e){
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	/**
+	 * filterメソッド
+
+	 */
+	public List<ManageUser> filter(String facility_id) throws Exception {
+		//戻り値用のリストを作成
+		//new演算子とArrayListで空のListを用意
+		List<ManageUser> list = new ArrayList<>();
+
+		//データベースへのコネクション
+		Connection connection=getConnection();
+		//プリペアードステートメント
+		PreparedStatement statement=null;
+		//リザルトセット
+		ResultSet rSet=null;
+		//SQL文の条件追加
+		String sql="select * from manageuser where facility_id=? ";
+
+		try{
+			//プリペアードステートメントにSQLセット
+			statement=connection.prepareStatement(sql);
+			//プリペアードステートメントに学校コードをバインド
+			statement.setString(1, facility_id);
+
+			rSet=statement.executeQuery();
+			list=postFilter(rSet);
+		}catch(Exception e){
+			throw e;
+		}finally{
+			if(statement !=null){
+				try{
+					statement.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
+			if(connection !=null){
+				try{
+					connection.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
+		}
+		return list;
 	}
 
 	public boolean saveManageUserInfo(ManageUser mu) throws Exception {
