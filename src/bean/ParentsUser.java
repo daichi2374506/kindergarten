@@ -1,6 +1,6 @@
 package bean;
 
-public class ParentsUser {
+public class ParentsUser extends User{
 
 	private String parents_id;
 	private String parents_name;
