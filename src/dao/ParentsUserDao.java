@@ -9,7 +9,7 @@ import bean.ParentsUser;
 
 public class ParentsUserDao extends Dao{
 
-	private String baseSql = "select * from ParentsUser where parents_id=? and facility_id=? ";
+	private String baseSql = "select * from parentspser where parents_id=? and facility_id=? ";
 
 	public ParentsUser getParentsUserInfo(String parents_id, String facility_id) throws Exception {
 		ParentsUser pu = new ParentsUser();
@@ -90,7 +90,7 @@ public class ParentsUserDao extends Dao{
 				//保護者が存在した場合
 				//プリペアードステートメントにUPDATE文をセット
 				statement = connection
-						.prepareStatement("update ParentsUser set parents_id=?, parents_name=?, parents_pass=?, parents_address=?, parents_tel=?, parents_mail1=?, parents_mail2=?, parents_mail3=?, facility_id=? where parentsuser_id=? and facility_id=?");
+						.prepareStatement("update parentsuser set parents_id=?, parents_name=?, parents_pass=?, parents_address=?, parents_tel=?, parents_mail1=?, parents_mail2=?, parents_mail3=?, facility_id=? where parentsuser_id=? and facility_id=?");
 				//プリペアードステートメントに値をバインド
 				statement.setString(1, pu.getParents_id());
 				statement.setString(2, pu.getParents_name());
@@ -151,7 +151,7 @@ public class ParentsUserDao extends Dao{
 		try{
 			//プリペアードステートメンにINSERT文をセット
 			statement = connection.prepareStatement(
-					"insert into ParentsUser (parents_id, parents_name, parents_pass, parents_address, parents_tel, parents_mail1, parents_mail2, parents_mail3, facility_id) values(?, null, ?, null, null, null, null, null, ?) ");
+					"insert into parentsuser (parents_id, parents_name, parents_pass, parents_address, parents_tel, parents_mail1, parents_mail2, parents_mail3, facility_id) values(?, null, ?, null, null, null, null, null, ?) ");
 			//プリペアードステートメントに値をバインド
 			statement.setString(1, parents_id);
 			statement.setString(2, parents_pass);
@@ -204,7 +204,7 @@ public class ParentsUserDao extends Dao{
 
 		try{
 			//prepareにsql文セット
-			statement=connection.prepareStatement("select * from parents where parents_id=? and parents_pass=? and facility_id=? ");
+			statement=connection.prepareStatement("select * from parentsuser where parents_id=? and parents_pass=? and facility_id=? ");
 			//バインド
 			statement.setString(1, parents_id);
 			statement.setString(2, parents_pass);
