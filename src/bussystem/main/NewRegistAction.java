@@ -33,6 +33,7 @@ public class NewRegistAction extends Action{
 		//レスポンス値をセット 6
 
 		req.setAttribute("user_status",us );//クラス番号のlistをセット
+		session.setAttribute("user", mu);
 
 		//JSPへフォワード 7
 		req.getRequestDispatcher("newregist.jsp").forward(req, res);

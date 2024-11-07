@@ -139,6 +139,60 @@ public class ParentsUserDao extends Dao{
 
 	}
 
+
+	public boolean newSaveParentsUserInfo(String parents_id,String parents_pass,String facility_id) throws Exception {
+		//コネクションを確立
+		Connection connection = getConnection();
+		//プリペアードステートメント
+		PreparedStatement statement = null;
+		//実行件数
+		int count = 0;
+
+		try{
+			//プリペアードステートメンにINSERT文をセット
+			statement = connection.prepareStatement(
+					"insert into ParentsUser (parents_id, parents_name, parents_pass, parents_address, parents_tel, parents_mail1, parents_mail2, parents_mail3, facility_id) values(?, null, ?, null, null, null, null, null, ?) ");
+			//プリペアードステートメントに値をバインド
+			statement.setString(1, parents_id);
+			statement.setString(2, parents_pass);
+			statement.setString(3, facility_id);
+
+
+			//プリペアードステートメントを実行
+			count = statement.executeUpdate();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			//
+			if(statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+
+			if(connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
+
+		if (count > 0) {
+			//実行件数が1以上ある場合
+			return true;
+		} else {
+			//実行件数が0件の場合
+			return false;
+		}
+
+	}
+
+
 	public ParentsUser parentsLogin(String parents_id, String parents_pass,String facility_id) throws Exception{
 
 		ParentsUser pu = new ParentsUser();
