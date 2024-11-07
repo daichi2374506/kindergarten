@@ -63,7 +63,124 @@ public class ManageUserDao extends Dao{
 		return mu;
 	}
 
-	public void saveManageUserInfo() throws Exception {
+	public boolean saveManageUserInfo(ManageUser mu) throws Exception {
+		//コネクションを確立
+		Connection connection = getConnection();
+		//プリペアードステートメント
+		PreparedStatement statement = null;
+		//実行件数
+		int count = 0;
+
+		try{
+			//データベースから保護者を取得
+			ManageUser old = getManageUserInfo(mu.getUser_id(), mu.getFacility_id());
+			if (old == null) {
+				//保護者が存在しなかった場合
+				//プリペアードステートメンにINSERT文をセット
+				statement = connection.prepareStatement(
+						"insert into ManageUser (user_id, user_name, user_pass, facility_id) values(?, ?, ?, ?) ");
+				//プリペアードステートメントに値をバインド
+				statement.setString(1, mu.getUser_id());
+				statement.setString(2, mu.getUser_name());
+				statement.setString(3, mu.getUser_pass());
+				statement.setString(4, mu.getFacility_id());
+			} else {
+				//保護者が存在した場合
+				//プリペアードステートメントにUPDATE文をセット
+				statement = connection
+						.prepareStatement("update ManageUser set user_id=?, user_name=?, user_pass=?, facility_id=? where parentsuser_id=? and facility_id=?");
+				//プリペアードステートメントに値をバインド
+				statement.setString(1, mu.getUser_id());
+				statement.setString(2, mu.getUser_name());
+				statement.setString(3, mu.getUser_pass());
+				statement.setString(4, mu.getFacility_id());
+				statement.setString(5, mu.getUser_id());
+				statement.setString(6, mu.getFacility_id());
+			}
+
+			//プリペアードステートメントを実行
+			count = statement.executeUpdate();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			//
+			if(statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+
+			if(connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
+
+		if (count > 0) {
+			//実行件数が1以上ある場合
+			return true;
+		} else {
+			//実行件数が0件の場合
+			return false;
+		}
+
+	}
+
+	public boolean newSaveManageUserInfo(String user_id,String user_pass,String facility_id) throws Exception {
+		//コネクションを確立
+		Connection connection = getConnection();
+		//プリペアードステートメント
+		PreparedStatement statement = null;
+		//実行件数
+		int count = 0;
+
+		try{
+			//プリペアードステートメンにINSERT文をセット
+			statement = connection.prepareStatement(
+					"insert into ManageUser (user_id, user_name, user_pass, facility_id) values(?, null, ?, ?) ");
+			//プリペアードステートメントに値をバインド
+			statement.setString(1, user_id);
+			statement.setString(2, user_pass);
+			statement.setString(3, facility_id);
+
+
+			//プリペアードステートメントを実行
+			count = statement.executeUpdate();
+
+		} catch (Exception e) {
+			throw e;
+		} finally {
+			//
+			if(statement != null) {
+				try {
+					statement.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+
+			if(connection != null) {
+				try {
+					connection.close();
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+			}
+		}
+
+		if (count > 0) {
+			//実行件数が1以上ある場合
+			return true;
+		} else {
+			//実行件数が0件の場合
+			return false;
+		}
 
 	}
 
