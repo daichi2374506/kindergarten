@@ -24,7 +24,7 @@ public class LoginExecuteAction extends Action{
 
 		ManageUserDao MUDao = new ManageUserDao();
 
-		HttpSession session = req.getSession();
+		HttpSession session = req.getSession(true);
 
 		String user_id = req.getParameter("user_id");
 		String user_pass = req.getParameter("user_pass");
@@ -42,27 +42,27 @@ public class LoginExecuteAction extends Action{
 			MU.setAuthenticated(true);
 
 			String m = "m";
-			req.setAttribute("m", m);
+			session.setAttribute("m", m);
 
 			System.out.println(m);
 
-			System.out.println("AAAAA2");
+			System.out.println("管理者としてログイン");
 
 		} else if(user_id.contains("T")) {
 			MU.setAuthenticated(true);
 
 			String t = "t";
-			req.setAttribute("t", t);
+			session.setAttribute("t", t);
 
-			System.out.println("AAAAA3");
+			System.out.println("先生としてログイン");
 
 		} else if(user_id.contains("P")) {
 			MU.setAuthenticated(true);
 
 			String p = "p";
-			req.setAttribute("p", p);
+			session.setAttribute("p", p);
 
-			System.out.println("AAAAA4");
+			System.out.println("保護者としてログイン");
 
 		}
 
@@ -76,7 +76,7 @@ public class LoginExecuteAction extends Action{
 		session.setAttribute("user", MU);
 
 		url = "main/Menu.action";
-		res.sendRedirect(url); //Forwardつかう
+		res.sendRedirect(url);
 
 
 	}
