@@ -48,6 +48,7 @@ public class AbsenceDao extends Dao{
 				abs.setChild_id(rSet.getString("child_id"));
 				abs.setAbsence_date(rSet.getString("absence_date"));
 				abs.setFacility_id(rSet.getString("facility_id"));
+				abs.setAbs_is_attend(rSet.getBoolean("abs_is_attend"));
 				list.add(abs);
 
 			}
@@ -98,6 +99,7 @@ public class AbsenceDao extends Dao{
 				abs.setChild_id(rSet.getString("child_id"));
 				abs.setAbsence_date(rSet.getString("absence_date"));
 				abs.setFacility_id(rSet.getString("facility_id"));
+				abs.setAbs_is_attend(rSet.getBoolean("abs_is_attend"));
 			}else{
 				abs=null;
 			}
@@ -146,7 +148,7 @@ public class AbsenceDao extends Dao{
 				//該当の日に対象の子の欠席情報が存在しなかった場合
 				//プリペアードステートメンにINSERT文をセット
 				statement = connection.prepareStatement(
-						"insert into Absence (absence_id, absence_main, child_id, absence_date, facility_id) values(?, ?, ?, ?, ?) ");
+						"insert into Absence (absence_id, absence_main, child_id, absence_date, facility_id,) values(?, ?, ?, ?, ?) ");
 				//プリペアードステートメントに値をバインド
 				statement.setString(1, absence.getAbsence_id());
 				statement.setString(2, absence.getAbsence_main());
@@ -158,14 +160,13 @@ public class AbsenceDao extends Dao{
 				//該当の日に対象の子の欠席情報が存在した場合
 				//プリペアードステートメントにUPDATE文をセット
 				statement = connection
-						.prepareStatement("update Absence set absence_main=? child_id=? absence_date=? where child_id=? and facility_id=? and absence_date=? ");
+						.prepareStatement("update Absence set absence_main=? child_id=? absence_date=? where absence_id=? and facility_id=?  ");
 				//プリペアードステートメントに値をバインド
 				statement.setString(1, absence.getAbsence_main());
 				statement.setString(2, absence.getChild_id());
 				statement.setString(3, absence.getAbsence_date());
-				statement.setString(4, absence.getChild_id());
+				statement.setString(4, absence.getAbsence_id());
 				statement.setString(5, absence.getFacility_id());
-				statement.setString(6, absence.getAbsence_date());
 
 			}
 

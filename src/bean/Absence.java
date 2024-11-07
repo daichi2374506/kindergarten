@@ -39,8 +39,10 @@ public class Absence {
 	public void setFacility_id(String facility_id) {
 		this.facility_id = facility_id;
 	}
-	public boolean abs_is_attend() {
+	public boolean getAbs_is_attend() {
 		return abs_is_attend;
 	}
-
+	public void setAbs_is_attend(boolean abs_is_attend) {
+		this.abs_is_attend = abs_is_attend;
+	}
 }

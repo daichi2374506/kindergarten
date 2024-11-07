@@ -7,6 +7,8 @@ public class Facility {
 	private String facility_address;
 	private int facility_tel;
 	private String facility_mail;
+	private Boolean plan_is_attend;
+
 	public String getFacility_id() {
 		return facility_id;
 	}
@@ -36,6 +38,12 @@ public class Facility {
 	}
 	public void setFacility_mail(String facility_mail) {
 		this.facility_mail = facility_mail;
+	}
+	public boolean getPlan_is_attend() {
+		return plan_is_attend;
+	}
+	public void setPlan_is_attend(boolean plan_is_attend) {
+		this.plan_is_attend = plan_is_attend;
 	}
 
 }
