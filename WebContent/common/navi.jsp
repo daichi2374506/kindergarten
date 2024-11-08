@@ -7,8 +7,8 @@
 
 
 <ul>
-<li><p><a href="#">メニュー</a></p></li>
-<li><p><a href="#">新規登録</a></p></li>
+<li><p><a href="Menu.action">メニュー</a></p></li>
+<li><p><a href="NewRegist.action">新規登録</a></p></li>
 <li><p><a href="#">名簿一覧</a></p></li>
 <li><p><a href="#">保護者情報</a></p></li>
 <li><p><a href="#">子供情報</a></p></li>

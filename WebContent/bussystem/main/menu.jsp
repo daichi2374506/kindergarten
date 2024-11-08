@@ -19,7 +19,7 @@
 			<c:choose>
 				<c:when test="${userType1 == 'm'}">
 					<h2>管理者</h2>
-					<a href="新規登録">新規登録</a>
+					<a href="NewRegist.action">新規登録</a>
 					<a href="名簿情報一覧">名簿情報一覧</a>
 					<a href="保護者情報">保護者情報</a>
 					<a href="子供情報">子供情報</a>
