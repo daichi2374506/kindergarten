@@ -78,9 +78,12 @@ public class NewRegistExecuteAction extends Action{
 		}
 
 		//レスポンス値をセット 6
-		//11/8やることparentsuserdaoのpostfilter,filter作る
-		//レスポンスセットしてjspに飛ばす
 
+		req.setAttribute("user_status",user_status );
+		session.setAttribute("perfect_id", perfect_id);
+
+		//JSPへフォワード 7
+		req.getRequestDispatcher("newregistexecute.jsp").forward(req, res);
 	}
 
 }

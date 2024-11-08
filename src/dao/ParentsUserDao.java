@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import bean.ParentsUser;
 
@@ -58,6 +60,85 @@ public class ParentsUserDao extends Dao{
 
 		}
 		return pu;
+	}
+
+
+	private List<ParentsUser> postFilter(ResultSet rSet) throws Exception {
+		//空のリスト作成
+		List<ParentsUser>list=new ArrayList<>();
+		try{
+			//リザルトセットを全件走査
+
+			while(rSet.next()){
+
+				ParentsUser pu=new ParentsUser();
+
+				pu.setParents_id(rSet.getString("parents_id"));
+				pu.setParents_name(rSet.getString("parents_name"));
+				pu.setParents_pass(rSet.getString("parents_pass"));
+				pu.setParents_address(rSet.getString("parents_address"));
+				pu.setParents_tel(rSet.getString("parents_tel"));
+				pu.setParents_mail1(rSet.getString("parents_mail1"));
+				pu.setParents_mail2(rSet.getString("parents_mail2"));
+				pu.setParents_mail3(rSet.getString("parents_mail3"));
+				pu.setFacility_id(rSet.getString("facility_id"));
+
+
+				//リストにセットしていく
+				list.add(pu);
+
+			}
+		}catch(SQLException |NullPointerException e){
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	/**
+	 * filterメソッド
+
+	 */
+	public List<ParentsUser> filter(String facility_id) throws Exception {
+		//戻り値用のリストを作成
+		//new演算子とArrayListで空のListを用意
+		List<ParentsUser> list = new ArrayList<>();
+
+		//データベースへのコネクション
+		Connection connection=getConnection();
+		//プリペアードステートメント
+		PreparedStatement statement=null;
+		//リザルトセット
+		ResultSet rSet=null;
+		//SQL文の条件追加
+		String sql="select * from parentsuser where facility_id=? ";
+
+		try{
+			//プリペアードステートメントにSQLセット
+			statement=connection.prepareStatement(sql);
+			//プリペアードステートメントに学校コードをバインド
+			statement.setString(1, facility_id);
+
+			rSet=statement.executeQuery();
+			list=postFilter(rSet);
+		}catch(Exception e){
+			throw e;
+		}finally{
+			if(statement !=null){
+				try{
+					statement.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
+			if(connection !=null){
+				try{
+					connection.close();
+				}catch(SQLException sqle){
+					throw sqle;
+				}
+			}
+		}
+		return list;
 	}
 
 	public boolean saveParentsUserInfo(ParentsUser pu) throws Exception {
