@@ -31,7 +31,8 @@ public class LoginExecuteAction extends Action{
 		String user_id = req.getParameter("user_id");
 		String user_pass = req.getParameter("user_pass");
 		String facility_id = req.getParameter("facility_id");
-
+		System.out.println(user_id);
+		System.out.println("OOOOOOOOOOO");
 		if(user_id.contains("M") || user_id.contains("T")){
 			MU = MUDao.login(user_id, user_pass, facility_id);
 			if(MU == null){
